@@ -5,14 +5,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
-import com.apkfuns.logutils.LogUtils;
-import com.example.filedownload.DownloadManager;
 import com.example.filedownload.file.FileStorageManager;
-import com.example.filedownload.http.DownloadCallBack;
+import com.example.filedownload.utils.Logger;
+import com.example.service.HttpApiProvider;
+import com.example.service.HttpEntityResponse;
+import com.example.service.HttpRequestEntity;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +24,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        Map<String ,String> map = new HashMap<>();
+        map.put("usrname","seven");
+        map.put("userage","12");
+       HttpApiProvider.helloWord("http://192.168.1.12:8080/web/HelloServlet", map, new HttpEntityResponse<String>() {
+           @Override
+           public void success(HttpRequestEntity requestEntity, String data) {
+               Logger.debug("nate", data.toString());
+           }
+
+           @Override
+           public void fail(int errorCode, String errorMsg) {
+
+           }
+       });
+
 
         File file = FileStorageManager.getInstance().getFileByName("http://www.imooc.com");
 
@@ -52,21 +71,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
-        DownloadManager.getInstance().download(url, new DownloadCallBack() {
+      /*  DownloadManager.getInstance().download(url, new DownloadCallBack() {
             @Override
             public void success(File file) {
-//                //两个线程下载会回调两次
+          //两个线程下载会回调两次
                 if (count < 1) {
                     count++;
                     return;
                 }
-//                final Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        imageView.setImageBitmap(bitmap);
-//                    }
-//                });
                 installApk(file);
                 LogUtils.d("success:" + file.getAbsolutePath());
             }
@@ -81,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 LogUtils.d("-----------progress:" + progress);
                 ((ProgressBar) findViewById(R.id.progressBar)).setProgress(progress);
             }
-        });
+        });*/
     }
 
     private void installApk(File file) {
