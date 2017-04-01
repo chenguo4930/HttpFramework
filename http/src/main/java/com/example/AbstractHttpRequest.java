@@ -16,7 +16,6 @@ import java.util.zip.ZipOutputStream;
  * @version 1.0.0
  * @since 2017-04-01
  */
-
 public abstract class AbstractHttpRequest implements HttpRequest {
 
     private static final String GZIP = "gzip";

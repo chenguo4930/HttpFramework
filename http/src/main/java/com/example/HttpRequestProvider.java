@@ -9,12 +9,12 @@ import com.example.http.HttpMethod;
 import com.example.http.HttpRequest;
 import com.example.utils.Utils;
 
+import java.io.IOException;
 import java.net.URI;
 
 
-
 /**
- * class description here
+ * 网络请求提供者
  *
  * @author cheng
  * @version 1.0.0
@@ -29,10 +29,13 @@ public class HttpRequestProvider {
     public HttpRequestProvider() {
         if (OKHTTP_REQUEST) {
             mHttpRequestFactory = new OkHttpRequestFactory();
+        } else {
+            //如果没有OkHttp3就用原生请求
+            mHttpRequestFactory = new OriginHttpRequestFactory();
         }
     }
 
-    public HttpRequest getHttpRequest(URI uri, HttpMethod httpMethod) {
+    public HttpRequest getHttpRequest(URI uri, HttpMethod httpMethod) throws IOException {
         return mHttpRequestFactory.createHttpRequest(uri, httpMethod);
     }
 

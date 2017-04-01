@@ -49,7 +49,7 @@ public class OkHttpRequestFactory implements HttpRequestFactory{
     }
 
     @Override
-    public OkHttpRequest createHttpRequest(URI uri, HttpMethod method) {
+    public OriginHttpRequest createHttpRequest(URI uri, HttpMethod method) {
         return new OkHttpRequest(mClient,method,uri.toString());
     }
 

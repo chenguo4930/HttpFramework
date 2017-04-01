@@ -7,7 +7,9 @@ package com.example;
 
 
 import com.example.http.HttpMethod;
+import com.example.http.HttpRequest;
 
+import java.io.IOException;
 import java.net.URI;
 
 /**
@@ -19,5 +21,5 @@ import java.net.URI;
  */
 public interface HttpRequestFactory {
 
-   OkHttpRequest createHttpRequest(URI uri, HttpMethod method);
+   HttpRequest createHttpRequest(URI uri, HttpMethod method) throws IOException;
 }
